@@ -31,7 +31,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">            
             <li class="nav-item">
-                <a class="nav-link" href="./signup_signin/logout.php">Se déconnecter</a>
+                <a class="nav-link" href="./treatment/logout.php">Se déconnecter</a>
             </li>
         </ul>
     </div>

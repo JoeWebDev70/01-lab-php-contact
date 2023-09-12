@@ -54,7 +54,7 @@
         //check if url treatment is ok then return clean url if method is GET
         $checkedUrl = checkUrl($_SERVER['REQUEST_URI']);
         
-        //refer is origin url and url treatment are signup and post
+        //check if origin url and url treatment
         if(($checkedUrl === $treatmentPage) 
         && (($_SERVER['HTTP_REFERER'] == $originPage[0]) || ($_SERVER['HTTP_REFERER'] == $originPage[1]))){
 

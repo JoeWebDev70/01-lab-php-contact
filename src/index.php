@@ -6,7 +6,6 @@
     $email = "";
     $password = "";
     $token = "";
-    $token_time = "";
     $successMessage = "";
     $errorMessage = "";
 

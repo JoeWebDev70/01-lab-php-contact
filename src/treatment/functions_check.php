@@ -4,6 +4,7 @@
 
     $GLOBALS['urlTreatment'] = [
         '/treatment/login.php',
+        '/treatment/add_user.php',
     ];
 
     //check if url and method are ok - return url 
