@@ -1,31 +1,33 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Connexion</title>
+    <title>Formulaire d'Inscription</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Mon Site</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">            
-            <li class="nav-item">
-                <a class="nav-link" href="#">S'inscrire</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
 <div class="container mt-5">
-    <h2>Formulaire de Connexion</h2>
+    <h2>Formulaire d'Inscription</h2>
     <form action="#" method="POST">
+        <!-- Champ : Prénom -->
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" class="form-control" id="prenom" name="prenom" required>
+        </div>
+
+        <!-- Champ : Nom -->
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" class="form-control" id="nom" name="nom" required>
+        </div>
+
         <!-- Champ : Adresse e-mail -->
         <div class="form-group">
             <label for="email">Adresse e-mail</label>
@@ -38,19 +40,14 @@
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
 
-        <!-- Option : Se souvenir de moi -->
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-            <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-        </div>
-
-        <!-- Lien : Mot de passe oublié -->
+        <!-- Champ : Répéter le mot de passe -->
         <div class="form-group">
-            <a href="#">Mot de passe oublié ?</a>
+            <label for="password_repeat">Répéter le mot de passe</label>
+            <input type="password" class="form-control" id="password_repeat" name="password_repeat" required>
         </div>
 
         <!-- Bouton d'envoi -->
-        <button type="submit" class="btn btn-primary">Se connecter</button>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
     </form>
 </div>
 

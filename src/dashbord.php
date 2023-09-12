@@ -1,3 +1,20 @@
+<?php
+
+    session_start();
+    
+    //declarations of variables
+    $lifeTimeSession = 1*60;
+
+    // Check if user interact with page or not then : log out or set new time for last_access
+    if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
+        if(time()- intval($_SESSION['last_access']) > $lifeTimeSession){
+            header('location: ./treatment/logout.php');
+        }else{
+            $_SESSION['last_access'] = time();
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +27,11 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Mon Tableau de Bord</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <h1 class="navbar-brand" style="font-weight:400">Mon Tableau de Bord</h1>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">            
             <li class="nav-item">
-                <a class="nav-link" href="#">Se déconnecter</a>
+                <a class="nav-link" href="./signup_signin/logout.php">Se déconnecter</a>
             </li>
         </ul>
     </div>
