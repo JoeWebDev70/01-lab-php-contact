@@ -1,18 +1,20 @@
 <?php
-
+  
     session_start();
-   
-    //declarations of variables
+
+    //declaration of variables
     $email = "";
     $password = "";
     $token = "";
     $successMessage = "";
     $errorMessage = "";
 
+    
     $token = uniqid(rand(), true); //token creation 
-    $_SESSION['token'] = $token; //stockage
-    $_SESSION['token_time'] = time(); //stockage tokentime stamp 
+    $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
+    $_SESSION['token_time'] = time(); //store token timestamp in session
 
+    // if the session is set then get the values to set in form
     if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
         $email = $_SESSION["email"];
         unset($_SESSION["email"]);
@@ -22,7 +24,8 @@
         $password = $_SESSION["password"];
         unset($_SESSION["password"]);
     }
- 
+
+    // if the session is set then get the values for display messages
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         if(isset($_SESSION["message"]["error"])){$errorMessage = $_SESSION["message"]["error"];}
         if(isset($_SESSION["message"]["success"])){$successMessage = $_SESSION["message"]["success"];}
@@ -38,6 +41,7 @@
     <title>Formulaire de Connexion</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="./treatment/remember.js" defer></script>
 </head>
 <body>
 
@@ -84,8 +88,8 @@
 
         <!-- Option : Se souvenir de moi -->
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-            <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+            <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
+            <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
         </div>
 
         <!-- Lien : Mot de passe oublié -->
@@ -93,7 +97,7 @@
             <a href="#">Mot de passe oublié ?</a>
         </div>
 
-        <!-- jeton caché dans formulaire -->
+        <!-- token hidden in form -->
         <input type="hidden" name="token" id="token" value="<?php echo $token; ?>">
 
         <!-- Bouton d'envoi -->

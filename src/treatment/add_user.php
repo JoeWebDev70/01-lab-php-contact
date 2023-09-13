@@ -76,36 +76,37 @@
 
             //check if token CSRF (Cross-Site Request Forgery) is in form and already available
             $timestampOld = time() - (15*60); //15 mins
-            if($sessionToken != $postToken && $tokenTime <= $timestampOld){ //if session token == form token
+            if(!password_verify($postToken, $sessionToken) && $tokenTime <= $timestampOld){ 
                 $dataToProcess = false;
                 $errorMessage .= "Invalid token ! ";
             }
 
-            //check if password and password_reapeat are == else return to the form
-            if($password != $passwordRepeat){
-                $errorMessage .= 'Les mots de passe ne sont pas identiques ! '; //stock data in session 
+            
+            if($password != $passwordRepeat){ //check if password and password_reapeat are == 
+                $errorMessage .= 'Les mots de passe ne sont pas identiques ! '; 
                 $dataToProcess = false;
-            }else{ //check password strength 
-                if(!checkPassword($password)){
+            }else{ //passwords are == then check strength 
+                if(!checkPassword($password)){ //not strong enough
                     $errorMessage .= 'Votre mot de passe doit comporter au minimum 8 caractères et contenir au moins un chiffre et une lettre majuscule ! '; //stock data in session 
                     $dataToProcess = false;
-                }else{
-                    $passwordHashed = password_hash($password, PASSWORD_DEFAULT);// then hash password
+                }else{//strong enough then hash password
+                    $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
                 }
             }
             
-            //check mail format else return to the form
-            if (filter_var($email, FILTER_VALIDATE_EMAIL) && checkMail($email)){
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) && checkMail($email)){ 
+                //check mail exist in db 
                 $sql = "SELECT count(user_email) as count FROM user WHERE user_email = :email";
                 $sth = $connection->prepare($sql);
                 $sth->bindParam(':email', $email, PDO::PARAM_STR);
                 $sth->execute();
                 $result = $sth->fetch(PDO::FETCH_ASSOC);
+
                 if($result['count'] > 0){ //mail already exist in db
                     $errorMessage .= 'Email invalide ! '; 
                     $dataToProcess = false;
                 }
-            }else{
+            }else{ //mail format is not OK
                 $errorMessage .= 'Email invalide ! '; 
                 $dataToProcess = false;
             }
@@ -113,15 +114,15 @@
             session_destroy();
             header('HTTP/1.0 404 Not Found'); 
         }
-    }else{ //if data are not complete      
+    }else{ //data are not complete      
         $_SESSION["message"]["error"] = "Les données du formulaire ne sont pas complètes !"; //stock data in session 
         header('location: ../signup.html'); 
     }
 
 
-    if(!$dataToProcess){
+    if(!$dataToProcess){ //data are not OK then send user on signup and display error
         $_SESSION["message"]["error"] = $errorMessage;
-        header('location: ../signup.html'); //redirection in signup and display error message
+        header('location: ../signup.html');
     } else{ //data are complete, mail do not exist and passwords are the same then insert in data base
         $sql = "INSERT INTO user(user_name, user_surname, user_email, user_pw) 
                 VALUES (:prenom, :nom, :email, :pw)";
@@ -131,6 +132,7 @@
         $sth->bindParam(':email', $email, PDO::PARAM_STR);
         $sth->bindParam(':pw', $passwordHashed, PDO::PARAM_STR);
         $sth->execute();
+        
         // if data insert correctly then say to user sign up is ok and send on connexion page
         if($sth->rowCount() > 0){;
             $_SESSION["message"]["success"] = "Votre inscription à bien été prise en compte." ;

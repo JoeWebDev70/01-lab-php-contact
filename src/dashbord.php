@@ -4,15 +4,27 @@
     
     //declarations of variables
     $lifeTimeSession = 1*60;
+    $rememberMe = "";
 
-    // Check if user interact with page or not then : log out or set new time for last_access
+    
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-        if(time()- intval($_SESSION['last_access']) > $lifeTimeSession){
-            header('location: ./treatment/logout.php');
-        }else{
-            $_SESSION['last_access'] = time();
+        //check because if remember me was set before not need to check lifetime
+        if(isset($_SESSION['last_access']) && !empty($_SESSION['last_access'])){
+            // Check if user interact with page or not then : log out or set new time for last_access
+            if(time()- intval($_SESSION['last_access']) > $lifeTimeSession){
+                header('location: ./treatment/logout.php');
+            }else{
+                $_SESSION['last_access'] = time();
+            }
         }
     }
+
+    //if remember was set in this connection of user then process it: set the token in hidden input
+    if(isset($_SESSION['remember_me']) && !empty($_SESSION['remember_me'])){
+        $rememberMe = $_SESSION['remember_me'];
+        unset($_SESSION['remember_me']);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +35,7 @@
     <title>Tableau de Bord - Gestion des Contacts</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="./treatment/logout.js" defer></script>
 </head>
 <body>
 
@@ -31,12 +44,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">            
             <li class="nav-item">
-                <a class="nav-link" href="./treatment/logout.php">Se déconnecter</a>
+                <a class="nav-link" id="logout" href="./treatment/logout.php">Se déconnecter</a>
             </li>
         </ul>
     </div>
 </nav>
 
+<!-- remember treatment for further connections -->
+<!-- token hidden -->
+<input type="hidden" name="rememberMeToken" id="rememberMeToken" value="<?php echo $rememberMe; ?>">
+<script>
+    // get the token set with php and store it in localstorage
+    const rememberMe = document.querySelector("#rememberMeToken").value;
+    if(rememberMe != ""){
+        localStorage.setItem("rememberMe", JSON.stringify(rememberMe));
+        rememberMe.value = "";
+    }
+</script>
+<!-- remember treatment for further connections -->
 <div class="container mt-5">
     <h2>Tableau de Bord - Gestion des Contacts</h2>
     <p>Bienvenue dans votre tableau de bord de gestion des contacts. Vous pouvez ajouter, modifier ou supprimer des contacts ici.</p>

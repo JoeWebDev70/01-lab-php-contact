@@ -1,7 +1,7 @@
 <?php
     session_start(); //https://www.php.net/manual/fr/reserved.variables.session.php
 
-    //declarations  of variables
+    //declaration of variables
     $prenom = "";
     $nom = "";
     $email = "";
@@ -10,11 +10,12 @@
     $errorMessage = "";
     $token = "";
 
-    $token = uniqid(rand(), true); //token creation when arrive on this new page
-    $_SESSION['token'] = $token; //stockage
-    $_SESSION['token_time'] = time(); //stockage tokentime stamp 
+    $token = uniqid(rand(), true); //token creation
+    $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
+    $_SESSION['token_time'] = time(); //store token timestamp in session
     
-    if(isset($_SESSION["user"]) && !empty($_SESSION["user"])){
+    // if the session is set then get the values to set in form
+    if(isset($_SESSION["user"]) && !empty($_SESSION["user"])){ 
         if(isset($_SESSION["user"]["name"])){$prenom = $_SESSION["user"]["name"];}
         if(isset($_SESSION["user"]["surname"])){$nom = $_SESSION["user"]["surname"];}
         if(isset($_SESSION["user"]["email"])){$email = $_SESSION["user"]["email"];}
@@ -23,6 +24,7 @@
         unset($_SESSION["user"]);
     }
 
+    // if the session is set then get the values for display messages
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         if(isset($_SESSION["message"]["error"])){
             $errorMessage = $_SESSION["message"]["error"];
@@ -90,7 +92,7 @@
             <input type="password" class="form-control" id="password_repeat" name="password_repeat" required value="<?php echo $passwordRepeat; ?>">
         </div>
 
-        <!-- jeton caché dans formulaire -->
+        <!-- token hidden in form -->
         <input type="hidden" name="token" id="token" value="<?php echo $token; ?>">   
 
         <!-- Bouton d'envoi -->

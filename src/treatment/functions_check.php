@@ -1,5 +1,6 @@
 <?php
     
+    // declaration of url to check it before processing data
     global $urlTreatment;
 
     $GLOBALS['urlTreatment'] = [
@@ -7,7 +8,7 @@
         '/treatment/add_user.php',
     ];
 
-    //check if url and method are ok - return url 
+    //check if url is in array and return clean url for method GET
     function checkUrl($url){
         foreach($GLOBALS['urlTreatment'] as $pattern){
             $urlSplit = explode("?", $url);     //when method is get then need return just the first url part
@@ -19,7 +20,7 @@
         return false;
     }
 
-
+    //additional check for see if mail is in correct format
     function checkMail($email){
         $pattern = "/^([a-zA-Z0-9\._\-]+)@([a-zA-Z0-9\-]+)(?:\.[a-zA-Z0-9\-]+)*$/";
         if(preg_match($pattern, $email)){
@@ -29,6 +30,7 @@
         }
     }
 
+    // check if password is strong enough
     function checkPassword($passwordValue){
         $pwFormatStrength = "/^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/"; 
         //min 8 char max 20 - min 1 number and 1 uppercase char
