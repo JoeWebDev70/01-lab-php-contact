@@ -4,9 +4,13 @@
 
     //declaration of variables
     $result = [""];
+    $idContact = "";
     $prenom = "";
     $nom = "";
     $email = "";
+    $url = "";
+    $txtBtn = "";
+    $txtBtnCancel = "";
     $token = "";
     $token_time = "";
     $userName = "";
@@ -43,6 +47,7 @@
 
     //get contact for form
     if(isset($_SESSION["contact"]) && !empty($_SESSION["contact"])){
+        if(isset($_SESSION["contact"]["id"])){$idContact = $_SESSION["contact"]["id"];}
         if(isset($_SESSION["contact"]["name"])){$prenom = $_SESSION["contact"]["name"];}
         if(isset($_SESSION["contact"]["surname"])){$nom = $_SESSION["contact"]["surname"];}
         if(isset($_SESSION["contact"]["email"])){$email = $_SESSION["contact"]["email"];}
@@ -60,6 +65,16 @@
     if(isset($_SESSION['remember_me']) && !empty($_SESSION['remember_me'])){
         $rememberMe = $_SESSION['remember_me'];
         unset($_SESSION['remember_me']);
+    }
+
+    if($idContact == ""){ 
+        $url = "./treatment/contact_add.php" ;
+        $txtBtn = "Ajouter Contact";
+        $txtBtnCancel = "";
+    }else {
+        $url = "./treatment/contact_modify.php";
+        $txtBtn = "Valider";
+        $txtBtnCancel = "Annuler";
     }
 
 ?>
@@ -99,6 +114,7 @@
     }
 </script>
 <!-- remember treatment for further connections -->
+
 <div class="container mt-5">
     <h2>Tableau de Bord - Gestion des Contacts</h2>
     <p>Bienvenue <strong> <?php echo $userName; ?> </strong> dans votre tableau de bord de gestion des contacts. Vous pouvez ajouter, modifier ou supprimer des contacts ici.</p>
@@ -118,9 +134,9 @@
     <?php $errorMessage = ""; } ?>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <!-- Formulaire d'ajout de contact -->
-            <form>
+            <form action="<?php echo $url; ?>" method="POST" enctype=multipart/form-data>
                 <div class="form-group">
                     <label for="nom">Nom</label>
                     <input type="text" class="form-control" id="nom" name="nom" required value="<?php echo $nom; ?>">
@@ -134,11 +150,14 @@
                     <input type="email" class="form-control" id="email" name="email" required value="<?php echo $email; ?>">
                 </div>
                 <!-- token hide for check validity -->
-                <input type="hidden" name="token" id="token" value="<?php echo $token; ?>">   
-                <button type="submit" class="btn btn-primary">Ajouter Contact</button>
+                <input type="hidden" name="token" id="token" value="<?php echo $token; ?>">  
+
+                <button type="submit" class="btn btn-primary"><?php echo $txtBtn; ?></button>
+                <?php if(isset($txtBtnCancel) && !empty($txtBtnCancel)){ ?>
+                    <button type="submit" class="btn btn-primary"><?php echo $txtBtnCancel; ?></button>
+                <?php } ?>
             </form>
         </div>
-        <div class="col-md-6">
 
         <!-- Liste des contacts -->
         <div class="col-md-8">

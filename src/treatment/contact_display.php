@@ -1,6 +1,6 @@
 <?php
 
-    require('functions_check.php');
+    require('check_functions.php');
     require('connection_db.php');
     
     //connection to session
@@ -13,7 +13,7 @@
     }
 
     //declaration of variables
-    $treatmentPage = "/treatment/display_contact.php";
+    $treatmentPage = "/treatment/contact_display.php";
     $originPage = ["http://php-dev-1.online/", "http://php-dev-1.online/index.html"]; 
     //,"http://php-dev-1.online/dashbord.html"
     $userId = "";

@@ -53,7 +53,7 @@
 
 <div class="container mt-5">
     <h2>Formulaire d'Inscription</h2>
-    <form action="./treatment/add_user.php" method="POST" enctype=multipart/form-data>
+    <form action="./treatment/user_add.php" method="POST" enctype=multipart/form-data>
         
          <!-- if error message display -->
         <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>

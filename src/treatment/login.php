@@ -1,6 +1,6 @@
 <?php
 
-    require('functions_check.php');
+    require('check_functions.php');
     require('connection_db.php');
 
     //connection to session
@@ -154,7 +154,7 @@
             unset($_SESSION["password"]);
             unset($_SESSION["token"]);
             unset($_SESSION["token_time"]);
-            header('location: display_contact.php'); 
+            header('location: contact_display.php'); 
 
         }else{ //pw not match with user then send user on login and display error
             $_SESSION["message"]["error"]  = "Les identifiants ne sont pas valides ! ";

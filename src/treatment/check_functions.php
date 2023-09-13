@@ -5,7 +5,7 @@
 
     $GLOBALS['urlTreatment'] = [
         '/treatment/login.php',
-        '/treatment/add_user.php',
+        '/treatment/user_add.php',
         "/treatment/display_contact.php",
     ];
 

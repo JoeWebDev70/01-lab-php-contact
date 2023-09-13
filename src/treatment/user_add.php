@@ -1,5 +1,5 @@
 <?php
-    require('functions_check.php');
+    require('check_functions.php');
     require('connection_db.php');
     
     //connection to session
