@@ -15,7 +15,9 @@
 
             // connection db
             $connection = connectionDb();
-            if(!$connection){echo json_encode($connection);}
+            if(!$connection){
+                echo json_encode('error503.html'); 
+            }
             
             //check in db if token was set for an user
             $sql = "SELECT iduser, user_name, user_email, user_pw FROM user WHERE user_remember = :remember";

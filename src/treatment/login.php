@@ -8,7 +8,9 @@
 
    //connection db
     $connection = connectionDb();
-    if(!$connection){echo $connection;}
+    if(!$connection){
+        header('location: error503.html'); 
+    }
     
 
     //declaration of variables
@@ -110,7 +112,7 @@
         $sth->bindParam(':email', $email, PDO::PARAM_STR);
         $sth->execute();
         $result = $sth->fetch(PDO::FETCH_ASSOC);
-        
+
         if($result > 0 && password_verify($password, $result["user_pw"])){//email is found then verify password
            
             if($rememberMe != ""){  //if remember is set then set token in db
@@ -120,16 +122,17 @@
                 $sth->bindParam(':remember', $rememberHash, PDO::PARAM_STR);
                 $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
                 $sth->execute();
-                $resultRemember = $sth->fetch(PDO::FETCH_ASSOC);
-                
-                if($resultRemember > 0){ //if update is ok then set token in session to process it after with js
+
+                if($sth->rowCount() > 0){ //if update is ok then set token in session to process it after with js
                     $_SESSION['remember_me'] = $rememberHash;
                 }else{ //some error with update
                     $_SESSION["message"]["error"] = "Une erreur s'est produite lors de l'enregistrement de votre choix : remember me ! ";
                 }
+                
             }else{ //check if user have some old token set in DB
                 $sql = "SELECT count(user_remember) FROM user WHERE iduser = :id"; 
                 $sth = $connection->prepare($sql);
+                $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
                 $sth->execute();
                 $resultRemember = $sth->fetch(PDO::FETCH_ASSOC);
                 
@@ -139,18 +142,19 @@
                     $sth->bindParam(':remember', $rememberMe, PDO::PARAM_STR);
                     $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
                     $sth->execute();
+                    if($sth->rowCount() < 0){
+                       echo json_encode("error on delete old token");
+                    }
                 }
             }
+
             $user =  ["id" => $result["iduser"], "name" => $result["user_name"]] ;
             $_SESSION["user"] = $user;  
             unset($_SESSION["email"]);
             unset($_SESSION["password"]);
             unset($_SESSION["token"]);
             unset($_SESSION["token_time"]);
-            //for test : 
-                $_SESSION['last_access'] = time();
-            //
-            header('location: ../dashbord.php'); 
+            header('location: display_contact.php'); 
 
         }else{ //pw not match with user then send user on login and display error
             $_SESSION["message"]["error"]  = "Les identifiants ne sont pas valides ! ";

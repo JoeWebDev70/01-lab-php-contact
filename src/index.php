@@ -8,13 +8,12 @@
     $token = "";
     $successMessage = "";
     $errorMessage = "";
-
     
     $token = uniqid(rand(), true); //token creation 
     $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
     $_SESSION['token_time'] = time(); //store token timestamp in session
 
-    // if the session is set then get the values to set in form
+    //get the values to set in form
     if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
         $email = $_SESSION["email"];
         unset($_SESSION["email"]);
@@ -25,7 +24,7 @@
         unset($_SESSION["password"]);
     }
 
-    // if the session is set then get the values for display messages
+    //get the values for display messages
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         if(isset($_SESSION["message"]["error"])){$errorMessage = $_SESSION["message"]["error"];}
         if(isset($_SESSION["message"]["success"])){$successMessage = $_SESSION["message"]["success"];}

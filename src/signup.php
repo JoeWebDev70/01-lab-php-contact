@@ -14,7 +14,7 @@
     $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
     $_SESSION['token_time'] = time(); //store token timestamp in session
     
-    // if the session is set then get the values to set in form
+    // get the values to set in form
     if(isset($_SESSION["user"]) && !empty($_SESSION["user"])){ 
         if(isset($_SESSION["user"]["name"])){$prenom = $_SESSION["user"]["name"];}
         if(isset($_SESSION["user"]["surname"])){$nom = $_SESSION["user"]["surname"];}
@@ -24,7 +24,7 @@
         unset($_SESSION["user"]);
     }
 
-    // if the session is set then get the values for display messages
+    // get the values for display messages
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         if(isset($_SESSION["message"]["error"])){
             $errorMessage = $_SESSION["message"]["error"];
