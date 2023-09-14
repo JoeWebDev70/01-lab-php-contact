@@ -6,7 +6,7 @@
     $GLOBALS['urlTreatment'] = [
         '/treatment/login.php',
         '/treatment/user_add.php',
-        "/treatment/display_contact.php",
+        '/treatment/contact_display.php',
     ];
 
     //check if url is in array and return clean url for method GET

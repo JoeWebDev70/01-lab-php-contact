@@ -1,5 +1,5 @@
 <?php
-
+    //TODO : voir pour mettre token remember ds autre table et set un time
     session_start();
 
     //declaration of variables
@@ -79,6 +79,8 @@
 
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,8 +156,8 @@
 
                 <button type="submit" class="btn btn-primary"><?php echo $txtBtn; ?></button>
                 <?php if(isset($txtBtnCancel) && !empty($txtBtnCancel)){ ?>
-                    <button type="submit" class="btn btn-primary"><?php echo $txtBtnCancel; ?></button>
-                <?php } ?>
+                    <button type="submit" id="btnCancel" class="btn btn-primary"><?php echo $txtBtnCancel; ?></button>
+                <?php }?>
             </form>
         </div>
 

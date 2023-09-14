@@ -12,7 +12,7 @@
     }
 
     //declaration of variables
-    $treatmentPage = "/treatment/add_user.php";
+    $treatmentPage = "/treatment/user_add.php";
     $originPage = "http://php-dev-1.online/signup.html";
     $name = "";
     $surname = "";
