@@ -17,6 +17,7 @@
     $originPage = ["http://php-dev-1.online/", "http://php-dev-1.online/index.html","http://php-dev-1.online/dashbord.html"]; 
     $userId = "";
 
+    //check if user session exist
     if(isset($_SESSION["user"]["id"]) && !empty($_SESSION["user"]["id"])){
         $userId = $_SESSION["user"]["id"];
     }else{

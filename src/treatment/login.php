@@ -35,7 +35,6 @@
     $dataToProcess = true; //to check if data are good to be processed in db
 
     //check if all data are set and not null
-    //set them in intern variables and stock data to return in signup form with redirection
     if(isset($_POST['email']) && !empty($_POST['email'])){
         $email = htmlspecialchars($_POST['email']);
         $_SESSION["email"] = $email;

@@ -1,5 +1,4 @@
 <?php
-  //TODO : see for factoring at the end of project
   
     session_start();
 

@@ -8,6 +8,8 @@
         '/treatment/user_add.php',
         '/treatment/contact_display.php',
         '/treatment/contact_add.php',
+        '/treatment/contact_modify.php',
+        '/treatment/contact_update.php',
     ];
 
     //check if url is in array and return clean url for method GET

@@ -29,7 +29,6 @@
     $dataToProcess = true; //to check if data are good to be processed in db
     
     //check if all data are set and not null
-    //set in intern variables and stock data to return in signup form with redirection
     if(isset($_SESSION["user"]["id"]) && !empty($_SESSION["user"]["id"])){
         $userId = htmlspecialchars($_SESSION["user"]["id"]);
     }else{
@@ -66,7 +65,7 @@
     }else{$dataComplete = false;}
 
     if(isset($_SESSION['token_time']) && !empty($_SESSION['token_time'])){
-        $token_time = $_SESSION["token_time"];
+        $tokenTime = $_SESSION["token_time"];
     }else{$dataComplete = false;}
 
 
@@ -79,7 +78,7 @@
         if(($checkedUrl === $treatmentPage) && $_SERVER['HTTP_REFERER'] == $originPage){
 
             //check if token CSRF (Cross-Site Request Forgery) is in form and already available
-            if($sessionToken != $postToken && $token_time <= $timeLifeToken){ 
+            if($sessionToken != $postToken && $tokenTime <= $timeLifeToken){ 
                 $dataToProcess = false;
                 $errorMessage .= "Invalid token ! ";
             }
@@ -128,9 +127,7 @@
 
         if($sth->rowCount() > 0){ //check insertion of new contact
             $_SESSION["message"]["success"]  = "Votre contact à bien été enregistré." ;
-            unset($_SESSION["prenom"]);
-            unset($_SESSION["nom"]);
-            unset($_SESSION["email"]);
+            unset($_SESSION["contact"]);
             unset($_SESSION["token"]);
             unset($_SESSION["token_time"]);
             unset( $_SESSION["message"]["error"]);
