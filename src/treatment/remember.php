@@ -43,8 +43,8 @@
                     $user =  ["id" => $result["iduser"], "name" => $result["user_name"]] ;
                     $_SESSION["user"] = $user; 
                     echo json_encode("access authorized");
-                }else{ //token life is passed delete values in db
                     
+                }else{ //token life is passed delete values in db
                     $sql = "UPDATE user SET remember_token = :token, remember_date = :tokentime WHERE iduser=:id"; 
                     $sth = $connection->prepare($sql);
                     $sth->bindParam(':token', $token, PDO::PARAM_STR);
@@ -78,7 +78,9 @@
         }else{ //rememberme token was not send correctly
             echo json_encode("access failed");
         }      
-    }
+    }else{ //rememberme token was not send correctly
+        echo json_encode("access failed");
+    } 
     
 
 ?>

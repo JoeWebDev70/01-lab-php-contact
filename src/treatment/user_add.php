@@ -23,6 +23,7 @@
     $postToken = "";
     $sessionToken = "";
     $tokenTime = "";
+    $timeLifeToken = time() - (15*60); //15 mins
     $errorMessage = "";
 
     $dataComplete = true; //to check if data send by from are complete
@@ -77,8 +78,8 @@
         if(($checkedUrl === $treatmentPage) && ($_SERVER['HTTP_REFERER'] == $originPage)){
 
             //check if token CSRF (Cross-Site Request Forgery) is in form and already available
-            $timestampOld = time() - (15*60); //15 mins
-            if(!password_verify($postToken, $sessionToken) && $tokenTime <= $timestampOld){ 
+
+            if(!password_verify($postToken, $sessionToken) && $tokenTime <= $timeLifeToken){ 
                 $dataToProcess = false;
                 $errorMessage .= "Invalid token ! ";
             }
@@ -96,7 +97,7 @@
                 }
             }
             
-            if (filter_var($email, FILTER_VALIDATE_EMAIL) && checkMail($email)){ 
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) && checkMail($email)){ //check email format
                 //check mail exist in db 
                 $sql = "SELECT count(user_email) as count FROM user WHERE user_email = :email";
                 $sth = $connection->prepare($sql);
@@ -117,7 +118,7 @@
             header('HTTP/1.0 404 Not Found'); 
         }
     }else{ //data are not complete      
-        $_SESSION["message"]["error"] = "Les données du formulaire ne sont pas complètes !"; //stock data in session 
+        $_SESSION["message"]["error"] = "Les données du formulaire ne sont pas complètes !"; 
         header('location: ../signup.html'); 
     }
 
@@ -137,10 +138,13 @@
         
         // if data insert correctly then say to user sign up is ok and send on connexion page
         if($sth->rowCount() > 0){;
-            $_SESSION["message"]["success"] = "Votre inscription à bien été prise en compte." ;
+            $_SESSION["message"]["success"] = "Votre inscription à bien été prise en compte ! " ;
             unset($_SESSION["user"]); 
             unset($_SESSION["message"]["error"]);
             header('location: ../index.html'); 
+        }else{
+            $_SESSION["message"]["error"] = " Une erreur s'est produite lors votre inscription ! "; 
+            header('location: ../signup.html');
         }
     }
         

@@ -14,8 +14,7 @@
 
     //declaration of variables
     $treatmentPage = "/treatment/contact_display.php";
-    $originPage = ["http://php-dev-1.online/", "http://php-dev-1.online/index.html"]; 
-    //,"http://php-dev-1.online/dashbord.html"
+    $originPage = ["http://php-dev-1.online/", "http://php-dev-1.online/index.html","http://php-dev-1.online/dashbord.html"]; 
     $userId = "";
 
     if(isset($_SESSION["user"]["id"]) && !empty($_SESSION["user"]["id"])){
@@ -29,13 +28,10 @@
 
     if(($checkedUrl === $treatmentPage) && 
     (($_SERVER['HTTP_REFERER'] == $originPage[0]) || ($_SERVER['HTTP_REFERER'] == $originPage[1])
-    )){ 
-        //|| ($_SERVER['HTTP_REFERER'] == $originPage[2])
+    || ($_SERVER['HTTP_REFERER'] == $originPage[2]))){ 
+
         $sql = 'SELECT c.idcontact AS "id", c.contact_name AS "name", c.contact_surname AS "surname", c.contact_email AS "email" 
-                FROM ((contact as c 
-                INNER JOIN user_contact as uc ON c.idcontact = uc.contact_idcontact)
-                INNER JOIN user as u ON uc.user_iduser = u.iduser)
-                WHERE u.iduser = :id ORDER BY surname ASC';
+                FROM contact as c WHERE user_iduser = :id ORDER BY surname ASC';
         $sth = $connection->prepare($sql);
         $sth->bindParam(':id', $userId, PDO::PARAM_INT);
         $sth->execute();

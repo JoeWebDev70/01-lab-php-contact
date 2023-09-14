@@ -25,7 +25,7 @@ if(remember != ""){
     .then((data) => { //process the response send by the previous promise
         if(data == "access authorized"){ //only this response is processed and send the user on his dashbord
             window.location.href = "http://php-dev-1.online/treatment/contact_display.php";
-        }else if(data == "access denied"){
+        }else if(data == "access denied" || data == "access failed"){
             //check in localstorage if exist and remove item remember
             if (!localStorage.getItem("rememberMe")) {
                 localStorage.href = 'http://php-dev-1.online';
@@ -36,7 +36,9 @@ if(remember != ""){
             window.location.href = "http://php-dev-1.online/treatment/logout.php";
         }else if(data == "error503.html"){
             window.location.href = "http://php-dev-1.online/treatment/error503.html";
-        }//other responses send the user on login page
+        }else{//other responses send the user on login page set error in console
+            console.log('error on remember : ' ,data);
+        }   
     })
     .catch(error => { //if there was some error 
         console.error("error fetch : ", error);

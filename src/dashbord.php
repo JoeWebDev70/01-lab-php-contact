@@ -104,8 +104,6 @@
 </nav>
 
 <!-- remember treatment for further connections -->
-<!-- token hidden -->
-<!-- <input type="hidden" name="rememberMeToken" id="rememberMeToken" value="<?php echo $rememberMe; ?>"> -->
 <script>
     // get the token set with php and store it in localstorage
     const rememberMe = <?php echo $rememberMe; ?>;
@@ -149,6 +147,9 @@
                     <label for="email">Adresse e-mail</label>
                     <input type="email" class="form-control" id="email" name="email" required value="<?php echo $email; ?>">
                 </div>
+                <!-- hidden idcontact for modify -->
+                <input type="hidden" name="idcontact" id="idcontact" value="<?php echo $idContact; ?>"> 
+
                 <!-- token hide for check validity -->
                 <input type="hidden" name="token" id="token" value="<?php echo $token; ?>">  
 

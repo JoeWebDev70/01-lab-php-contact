@@ -21,13 +21,14 @@
     $password = "";
     $postToken = "";
     $sessionToken = "";
-    $token_time = "";
+    $tokenTime = "";
+    $timeLifeToken = time() - (15*60); //15 mins
     $rememberToken = "";
     $rememberTime = "";
     $rememberTimeStr = "";
     $rememberTokenHash = "";
     $rememberTimeHash = "";
-    $lastId = "";
+    $userRemember = false;
     $errorMessage = "";
 
     $dataComplete = true; //to check if data send by from are complete
@@ -54,7 +55,7 @@
     }else{$dataComplete = false;}
 
     if(isset($_SESSION['token_time']) && !empty($_SESSION['token_time'])){
-        $token_time = $_SESSION["token_time"];
+        $tokenTime = $_SESSION["token_time"];
     }else{$dataComplete = false;}
 
     if(isset($_POST['remember_me']) && !empty($_POST['remember_me'])){      
@@ -62,7 +63,6 @@
         $rememberTime = time();
     }
 
-   
     if($dataComplete){  //if all data continu treatment 
 
         //check if url treatment is ok then return clean url if method is GET
@@ -73,10 +73,7 @@
         && (($_SERVER['HTTP_REFERER'] == $originPage[0]) || ($_SERVER['HTTP_REFERER'] == $originPage[1]))){
 
             //check if token CSRF (Cross-Site Request Forgery) is in form and already available
-            //if token was generated into timestamp_old then is ok 
-            //else if it was generated more than timestamp_old then it is too old and refused
-            $timestamp_old = time() - (15*60); //15 mins
-            if(!password_verify($postToken, $sessionToken) && $token_time <= $timestamp_old){ 
+            if(!password_verify($postToken, $sessionToken) && $tokenTime <= $timeLifeToken){ 
                 $dataToProcess = false;
                 $errorMessage .= "Invalid token ! ";
             }
@@ -137,6 +134,7 @@
                     $rememberTimeHash = password_hash($rememberTime, PASSWORD_DEFAULT);
                     $_SESSION['remember']['token'] = $rememberTokenHash;
                     $_SESSION['remember']['time'] = $rememberTimeHash;
+                    $userRemember = true;
                 }else{//some error with update
                     $_SESSION["message"]["error"] = "Une erreur s'est produite lors de l'enregistrement de votre choix : remember me ! ";
                 }
@@ -165,8 +163,11 @@
 
                 }
             }
-
-            $user =  ["id" => $result["iduser"], "name" => $result["user_name"]] ;
+            if($userRemember){
+                $user =  ["id" => $result["iduser"], "name" => $result["user_name"], 'remember' => $userRemember];
+            }else{
+                $user =  ["id" => $result["iduser"], "name" => $result["user_name"]];
+            }
             $_SESSION["user"] = $user;  
             unset($_SESSION["email"]);
             unset($_SESSION["password"]);
