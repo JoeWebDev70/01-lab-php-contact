@@ -22,7 +22,12 @@
     $postToken = "";
     $sessionToken = "";
     $token_time = "";
-    $rememberMe = "";
+    $rememberToken = "";
+    $rememberTime = "";
+    $rememberTimeStr = "";
+    $rememberTokenHash = "";
+    $rememberTimeHash = "";
+    $lastId = "";
     $errorMessage = "";
 
     $dataComplete = true; //to check if data send by from are complete
@@ -53,7 +58,8 @@
     }else{$dataComplete = false;}
 
     if(isset($_POST['remember_me']) && !empty($_POST['remember_me'])){      
-        $rememberMe = uniqid(rand(), true);
+        $rememberToken = uniqid(rand(), true);
+        $rememberTime = time();
     }
 
    
@@ -106,6 +112,7 @@
         $_SESSION["message"]["error"] = $errorMessage;
         header('location: ../index.html'); 
     }else{ //data are OK
+
         //search user by email
         $sql = "SELECT iduser, user_name, user_surname, user_pw FROM user WHERE user_email = :email";
         $sth = $connection->prepare($sql);
@@ -114,37 +121,48 @@
         $result = $sth->fetch(PDO::FETCH_ASSOC);
 
         if($result > 0 && password_verify($password, $result["user_pw"])){//email is found then verify password
-           
-            if($rememberMe != ""){  //if remember is set then set token in db
-                $rememberHash = password_hash($rememberMe, PASSWORD_DEFAULT);
-                $sql = "UPDATE user SET user_remember = :remember WHERE iduser = :id";
+
+            if($rememberToken != ""){  //remember is set then set token
+                $rememberTokenHash = password_hash($rememberToken, PASSWORD_DEFAULT);
+                $rememberTimeStr = strval($rememberTime);
+                $sql = "UPDATE user SET remember_token = :token, remember_date = :tokentime WHERE iduser=:id"; 
                 $sth = $connection->prepare($sql);
-                $sth->bindParam(':remember', $rememberHash, PDO::PARAM_STR);
+                $sth->bindParam(':token', $rememberTokenHash, PDO::PARAM_STR);
+                $sth->bindParam(':tokentime', $rememberTimeStr, PDO::PARAM_STR);
                 $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
                 $sth->execute();
 
                 if($sth->rowCount() > 0){ //if update is ok then set token in session to process it after with js
-                    $_SESSION['remember_me'] = $rememberHash;
-                }else{ //some error with update
+                    //hash time for second verification in automatic connection 
+                    $rememberTimeHash = password_hash($rememberTime, PASSWORD_DEFAULT);
+                    $_SESSION['remember']['token'] = $rememberTokenHash;
+                    $_SESSION['remember']['time'] = $rememberTimeHash;
+                }else{//some error with update
                     $_SESSION["message"]["error"] = "Une erreur s'est produite lors de l'enregistrement de votre choix : remember me ! ";
                 }
+
+            }else{ //remember is not set
                 
-            }else{ //check if user have some old token set in DB
-                $sql = "SELECT count(user_remember) FROM user WHERE iduser = :id"; 
+                //check if user have some old token set in DB and delete it
+                $sql = "SELECT count(remember_token) as count FROM user WHERE iduser = :id"; 
                 $sth = $connection->prepare($sql);
                 $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
                 $sth->execute();
                 $resultRemember = $sth->fetch(PDO::FETCH_ASSOC);
-                
-                if($resultRemember > 0){ //old token was found then delete it
-                    $sql = "UPDATE user SET user_remember = :remember WHERE iduser = :id";
+
+                if($resultRemember["count"] > 0){  // then delete token in db
+                    
+                    $sql = "UPDATE user SET remember_token = :token, remember_date = :tokentime WHERE iduser=:id"; 
                     $sth = $connection->prepare($sql);
-                    $sth->bindParam(':remember', $rememberMe, PDO::PARAM_STR);
+                    $sth->bindParam(':token', $rememberToken, PDO::PARAM_STR);
+                    $sth->bindParam(':tokentime', $rememberTime, PDO::PARAM_STR);
                     $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
                     $sth->execute();
-                    if($sth->rowCount() < 0){
-                       echo json_encode("error on delete old token");
+
+                    if($sth->rowCount() == 0){//some error with update
+                        echo json_encode("error on delete values of remember token in db");
                     }
+
                 }
             }
 

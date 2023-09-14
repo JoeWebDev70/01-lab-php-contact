@@ -5,7 +5,7 @@ if (!localStorage.getItem("rememberMe")) {
     localStorage.href = 'http://php-dev-1.online';
 }
 if (localStorage.getItem("rememberMe") != null) {
-    remember = {'remember':JSON.parse(localStorage.getItem("rememberMe"))};
+    remember = JSON.parse(localStorage.getItem("rememberMe"));
 }
 
 // if token was found then send it for php treatment
@@ -25,8 +25,15 @@ if(remember != ""){
     .then((data) => { //process the response send by the previous promise
         if(data == "access authorized"){ //only this response is processed and send the user on his dashbord
             window.location.href = "http://php-dev-1.online/treatment/contact_display.php";
-        // }else if(data == "access denied"){
-        //     window.location.href = "http://php-dev-1.online/treatment/logout.js";
+        }else if(data == "access denied"){
+            //check in localstorage if exist and remove item remember
+            if (!localStorage.getItem("rememberMe")) {
+                localStorage.href = 'http://php-dev-1.online';
+            }
+            if (localStorage.getItem("rememberMe") != null) {
+                localStorage.removeItem("rememberMe");
+            }
+            window.location.href = "http://php-dev-1.online/treatment/logout.php";
         }else if(data == "error503.html"){
             window.location.href = "http://php-dev-1.online/treatment/error503.html";
         }//other responses send the user on login page

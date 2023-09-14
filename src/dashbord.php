@@ -1,5 +1,5 @@
 <?php
-    //TODO : voir pour mettre token remember ds autre table et set un time
+
     session_start();
 
     //declaration of variables
@@ -62,9 +62,10 @@
     }
 
     //if remember was set in this connection of user then process it: set the token in hidden input
-    if(isset($_SESSION['remember_me']) && !empty($_SESSION['remember_me'])){
-        $rememberMe = $_SESSION['remember_me'];
-        unset($_SESSION['remember_me']);
+    if(isset($_SESSION['remember']['token']) && !empty($_SESSION['remember']['token'])
+    && isset($_SESSION['remember']['time']) && !empty($_SESSION['remember']['time'])){
+        $rememberMe = json_encode(['token' => $_SESSION['remember']['token'], 'time'=> $_SESSION['remember']['time']]);
+        unset($_SESSION['remember']);
     }
 
     if($idContact == ""){ 
@@ -78,8 +79,6 @@
     }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -106,13 +105,12 @@
 
 <!-- remember treatment for further connections -->
 <!-- token hidden -->
-<input type="hidden" name="rememberMeToken" id="rememberMeToken" value="<?php echo $rememberMe; ?>">
+<!-- <input type="hidden" name="rememberMeToken" id="rememberMeToken" value="<?php echo $rememberMe; ?>"> -->
 <script>
     // get the token set with php and store it in localstorage
-    const rememberMe = document.querySelector("#rememberMeToken").value;
+    const rememberMe = <?php echo $rememberMe; ?>;
     if(rememberMe != ""){
         localStorage.setItem("rememberMe", JSON.stringify(rememberMe));
-        rememberMe.value = "";
     }
 </script>
 <!-- remember treatment for further connections -->
