@@ -1,32 +1,37 @@
 version: '3.8'    # https://docs.docker.com/compose/ -- version docker compose
-services:       # déclaration des services
-  php-apache:   #nom du premier service
-    build:     #build à partir du dockerfile
+services:       # déclaration of services
+  php-apache:   #first service php with apache server
+    build:     #build from dockerfile
       dockerfile: Dockerfile
-    #configuration
+    #configuration of server
     ports:
       - 80:80
     volumes:
-      - type: bind          #partage du dossier src 
+      - type: bind          #mount/sharing of src 
         source: ./src
         target: /var/www/html
-      - type: bind          #partage du fichier de configuration serveur 
+      - type: bind          #sharing server configuration
         source: ./apache2/apache2.conf
         target: /etc/apache2/apache2.conf
-    env_file:   #acces aux variables environment sql
+    env_file:   #access to environment sql variables 
       - .env
-    depends_on: #dépendance à la base de données
+    depends_on: #dependency bdd
       - mysql
-  mysql: #nom du deuxième service
+  mysql: #second service
     image: mysql  
     #configuration
     ports:
       - 3307:3306
-    env_file:     #acces aux variables environment sql
+    env_file:     #access to environment sql variables 
       - .env
     volumes:
       - type: volume
         source: php-contact-vol
         target: /var/lib/mysql
-volumes: #creation du volume
+  mailhog:    #third service mail
+      image: mailhog/mailhog:v1.0.0
+      ports:
+        - "1025:1025"
+        - "8025:8025"  #access on browser
+volumes: #volume creation
   php-contact-vol:
