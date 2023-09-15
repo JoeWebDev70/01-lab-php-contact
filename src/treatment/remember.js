@@ -37,7 +37,7 @@ if(remember != ""){
         }else if(data == "error503.html"){
             window.location.href = "http://php-dev-1.online/treatment/error503.html";
         }else{//other responses send the user on login page set error in console
-            console.log('error on remember : ' ,data);
+            console.log('error on remember : ' , data);
         }   
     })
     .catch(error => { //if there was some error 

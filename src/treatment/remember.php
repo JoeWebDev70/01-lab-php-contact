@@ -5,8 +5,8 @@
     $data = "";
     $rememberToken = "";
     $rememberTime = "";
-    $token = "";
-    $time = "";
+    $token = null;
+    $time = null;
     $lifeTimeToken = 30*24*60*60; //1 month
 
     //get data from js localstorage 
@@ -55,7 +55,7 @@
                     if($sth->rowCount() == 0){//some error with update
                         echo json_encode("error on delete values of remember token in db");
                     }
-
+                    $_SESSION["message"]["error"] = "Accès refusé ! Merci de vous reconnecter !";
                     echo json_encode("access denied");
                 }
             }else{ //user not found or timehash is not correct
@@ -72,13 +72,15 @@
                         echo json_encode("error on delete values of remember token in db");
                     }
                 }
-
+                $_SESSION["message"]["error"] = "Accès refusé ! Merci de vous reconnecter ";
                 echo json_encode("access denied");
             }
         }else{ //rememberme token was not send correctly
+            $_SESSION["message"]["error"] = "Accès refusé ! Merci de vous reconnecter ";
             echo json_encode("access failed");
         }      
     }else{ //rememberme token was not send correctly
+        $_SESSION["message"]["error"] = "Accès refusé ! Merci de vous reconnecter ";
         echo json_encode("access failed");
     } 
     

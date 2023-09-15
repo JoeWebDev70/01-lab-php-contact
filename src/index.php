@@ -33,19 +33,20 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire de Connexion</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="./treatment/remember.js" defer></script>
+    <!-- script for pass data from php to js and return -->
+    <script src="./treatment/remember.js" defer></script> 
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <h1 class="navbar-brand" style="font-weight:400">Mon Site</h1>
+    <p class="navbar-brand" style="font-weight:400">Mon Site</p>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">            
             <li class="nav-item">
@@ -56,23 +57,24 @@
 </nav>
 
 <div class="container mt-5">
-    <h2>Formulaire de Connexion</h2>
-    <form action="./treatment/login.php" method="POST" enctype=multipart/form-data>
+    <h1>Formulaire de Connexion</h1>
+            
+    <!-- if success message display -->
+    <?php if(isset($successMessage) && !empty($successMessage)){ ?>
+        <div class="alert alert-success" role="alert">
+            <?php echo $successMessage;?>
+        </div> 
+    <?php $successMessage = ""; } ?>
         
-        <!-- if success message display -->
-        <?php if(isset($successMessage) && !empty($successMessage)){ ?>
-            <div class="alert alert-success" role="alert">
-                <?php echo $successMessage;?>
-            </div> 
-        <?php $successMessage = ""; } ?>
-        
-         <!-- if error message display -->
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $errorMessage;?>
-            </div> 
-        <?php $errorMessage = ""; } ?>
+    <!-- if error message display -->
+    <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo $errorMessage;?>
+        </div> 
+    <?php $errorMessage = ""; } ?>
 
+    <form action="./treatment/login.php" method="POST" enctype=multipart/form-data>
+    
         <!-- Champ : Adresse e-mail -->
         <div class="form-group">
             <label for="email">Adresse e-mail</label>
@@ -105,8 +107,7 @@
 </div>
 
 <!-- Inclure les scripts Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>
 </html>

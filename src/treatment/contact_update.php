@@ -124,7 +124,7 @@
             $sth->execute();
 
             if($sth->rowCount() > 0){ //check insertion of new contact
-                $_SESSION["message"]["success"]  = "Votre contact à bien été enregistré." ;
+                $_SESSION["message"]["success"]  = "Votre contact à bien été modifié." ;
                 unset($_SESSION["contact"]);
                 unset($_SESSION["token"]);
                 unset($_SESSION["token_time"]);

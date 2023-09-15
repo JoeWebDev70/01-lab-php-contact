@@ -148,7 +148,8 @@
                 $resultRemember = $sth->fetch(PDO::FETCH_ASSOC);
 
                 if($resultRemember["count"] > 0){  // then delete token in db
-                    
+                    $rememberToken = null;
+                    $rememberTime = null;
                     $sql = "UPDATE user SET remember_token = :token, remember_date = :tokentime WHERE iduser=:id"; 
                     $sth = $connection->prepare($sql);
                     $sth->bindParam(':token', $rememberToken, PDO::PARAM_STR);

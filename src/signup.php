@@ -34,7 +34,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,17 +52,17 @@
 </nav>
 
 <div class="container mt-5">
-    <h2>Formulaire d'Inscription</h2>
-    <form action="./treatment/user_add.php" method="POST" enctype=multipart/form-data>
-        
-         <!-- if error message display -->
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
+    <h1>Formulaire d'Inscription</h1>
+    <!-- if error message display -->
+    <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
             <div class="alert alert-danger" role="alert">
                 <?php echo $errorMessage;?>
             </div> 
         <?php $errorMessage = ""; } ?>
-
-        <!-- Champ : Prénom -->
+        
+    <form action="./treatment/user_add.php" method="POST" enctype=multipart/form-data>
+        
+         <!-- Champ : Prénom -->
         <div class="form-group">
             <label for="prenom">Prénom</label>
             <input type="text" class="form-control" id="prenom" name="prenom" required value="<?php echo $prenom; ?>">
@@ -101,8 +101,7 @@
 </div>
 
 <!-- Inclure les scripts Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>
 </html>
