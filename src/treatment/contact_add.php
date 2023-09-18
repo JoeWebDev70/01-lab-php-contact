@@ -9,7 +9,7 @@
     //connection db
     $connection = connectionDb();
     if(!$connection){
-        header('location: error503.html'); 
+        header('location: ../error503.html'); 
     }
 
     //declaration of variables
@@ -123,9 +123,7 @@
         $sth->bindParam(':nom', $surname, PDO::PARAM_STR);
         $sth->bindParam(':email', $email, PDO::PARAM_STR);
         $sth->bindParam(':iduser', $userId, PDO::PARAM_INT);
-        $sth->execute();
-
-        if($sth->rowCount() > 0){ //check insertion of new contact
+        if($sth->execute()){ //check insertion of new contact
             $_SESSION["message"]["success"]  = "Votre contact à bien été enregistré." ;
             unset($_SESSION["contact"]);
             unset($_SESSION["token"]);

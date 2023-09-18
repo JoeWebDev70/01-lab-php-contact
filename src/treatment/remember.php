@@ -50,9 +50,7 @@
                     $sth->bindParam(':token', $token, PDO::PARAM_STR);
                     $sth->bindParam(':tokentime', $time, PDO::PARAM_STR);
                     $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
-                    $sth->execute();
-
-                    if($sth->rowCount() == 0){//some error with update
+                    if(!$sth->execute()){//some error with update
                         echo json_encode("error on delete values of remember token in db");
                     }
                     $_SESSION["message"]["error"] = "Accès refusé ! Merci de vous reconnecter !";
@@ -66,9 +64,7 @@
                     $sth->bindParam(':token', $token, PDO::PARAM_STR);
                     $sth->bindParam(':tokentime', $time, PDO::PARAM_STR);
                     $sth->bindParam(':id', $result["iduser"], PDO::PARAM_INT);
-                    $sth->execute();
-
-                    if($sth->rowCount() == 0){//some error with update
+                    if(!$sth->execute()){//some error with update
                         echo json_encode("error on delete values of remember token in db");
                     }
                 }

@@ -12,6 +12,10 @@
         '/treatment/contact_update.php',
         '/treatment/contact_confirm_delete.php',
         '/treatment/contact_delete.php',
+        '/treatment/password_mail.php',
+        '/treatment/password_set_new.php',
+        'http://php-dev-1.online/password_reset.html',
+
     ];
 
     //check if url is in array and return clean url for method GET

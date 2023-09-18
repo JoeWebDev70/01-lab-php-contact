@@ -31,9 +31,7 @@
                             WHERE idcontact = :id_contact";
                     $sth = $connection->prepare($sql);
                     $sth->bindParam(':id_contact', $value, PDO::PARAM_INT);
-                    $sth->execute();
-
-                    if($sth->rowCount() > 0){
+                    if($sth->execute()){
                         $deleted = true;
                     }else{
                         $deleted = false;

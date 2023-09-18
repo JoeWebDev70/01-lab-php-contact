@@ -18,7 +18,7 @@
         //connection db
         $connection = connectionDb();
         if(!$connection){
-            header('location: error503.html'); 
+            header('location: ../error503.html'); 
         }
 
         //declaration of variables
@@ -121,9 +121,7 @@
             $sth->bindParam(':prenom', $surname, PDO::PARAM_STR);
             $sth->bindParam(':email', $email, PDO::PARAM_STR);
             $sth->bindParam(':id_contact', $contactId, PDO::PARAM_INT);
-            $sth->execute();
-
-            if($sth->rowCount() > 0){ //check insertion of new contact
+            if($sth->execute()){ //check insertion of new contact
                 $_SESSION["message"]["success"]  = "Votre contact à bien été modifié." ;
                 unset($_SESSION["contact"]);
                 unset($_SESSION["token"]);
@@ -131,7 +129,7 @@
                 unset( $_SESSION["message"]["error"]);
                 header('location: contact_display.php');   
             }else{
-                $_SESSION["message"]["error"] = " Une erreur s'est produite lors de l'insertion du contact ";  
+                $_SESSION["message"]["error"] = "Une erreur est survenu lors de la modification sur le contact !";  
                 header('location: contact_display.php'); 
             }
         }

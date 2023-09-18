@@ -2,9 +2,8 @@
     session_start();
 
     //declaration of variables
-    $email = "";
     $token = "";
-    $successMessage = "";
+    $passwordToken = "";
     $errorMessage = "";
     
     $token = uniqid(rand(), true); //token creation 
@@ -12,18 +11,16 @@
     $_SESSION['token_time'] = time(); //store token timestamp in session
 
     //get the values to set in form
-    if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
-        $email = $_SESSION["email"];
-        unset($_SESSION["email"]);
+    if(isset($_GET["token"]) && !empty($_GET["token"])){
+        $passwordToken = $_GET["token"];
+        $_SESSION["password_token"] = $passwordToken;
     }
 
     //get the values for display messages
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         if(isset($_SESSION["message"]["error"])){$errorMessage = $_SESSION["message"]["error"];}
-        if(isset($_SESSION["message"]["success"])){$successMessage = $_SESSION["message"]["success"];}
         unset($_SESSION["message"]);
     }
-
 ?>
 
 
@@ -35,9 +32,9 @@
     <title>Récupération password</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- script for pass data from php to js and return -->
 </head>
 <body>
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="./treatment/logout.php">Mon Site</a>
@@ -45,14 +42,7 @@
 
 <div class="container mt-5">
     <h1>Récupération password</h1>
-            
-    <!-- if success message display -->
-    <?php if(isset($successMessage) && !empty($successMessage)){ ?>
-        <div class="alert alert-success" role="alert">
-            <?php echo $successMessage;?>
-        </div> 
-    <?php $successMessage = ""; } ?>
-        
+
     <!-- if error message display -->
     <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
         <div class="alert alert-danger" role="alert">
@@ -60,12 +50,18 @@
         </div> 
     <?php $errorMessage = ""; } ?>
 
-    <form action="./treatment/password_mail.php" method="POST" enctype=multipart/form-data>
-    
-        <!-- Champ : Adresse e-mail -->
+    <form action="./treatment/password_set_new.php" method="POST" enctype=multipart/form-data>
+
+            <!-- Champ : Mot de passe -->
         <div class="form-group">
-            <label for="email">Adresse e-mail</label>
-            <input type="email" class="form-control" id="email" name="email" required value="<?php echo $email; ?>">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <!-- Champ : Répéter le mot de passe -->
+        <div class="form-group">
+            <label for="password_repeat">Répéter le mot de passe</label>
+            <input type="password" class="form-control" id="password_repeat" name="password_repeat" required>
         </div>
 
         <!-- token hidden in form -->

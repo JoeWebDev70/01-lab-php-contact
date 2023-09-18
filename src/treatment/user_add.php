@@ -8,7 +8,7 @@
    //connection db
     $connection = connectionDb();
     if(!$connection){
-        header('location: error503.html'); 
+        header('location: ../error503.html'); 
     }
 
     //declaration of variables
@@ -133,16 +133,14 @@
         $sth->bindParam(':nom', $surname, PDO::PARAM_STR);
         $sth->bindParam(':email', $email, PDO::PARAM_STR);
         $sth->bindParam(':pw', $passwordHashed, PDO::PARAM_STR);
-        $sth->execute();
         
-        // if data insert correctly then say to user sign up is ok and send on connexion page
-        if($sth->rowCount() > 0){;
+        if($sth->execute()){// if data insert correctly then say to user sign up is ok and send on connexion page
             $_SESSION["message"]["success"] = "Votre inscription à bien été prise en compte ! " ;
             unset($_SESSION["user"]); 
             unset($_SESSION["message"]["error"]);
             header('location: ../index.html'); 
         }else{
-            $_SESSION["message"]["error"] = " Une erreur s'est produite lors votre inscription ! "; 
+            $_SESSION["message"]["error"] = " Une erreur s'est produite lors de votre inscription ! "; 
             header('location: ../signup.html');
         }
     }

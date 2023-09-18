@@ -26,6 +26,8 @@ btnValidate.addEventListener("click", function(){ //send values to php for proce
             contactId.length = 0; //clear array
             if(data == true){
                 window.location.href = "http://php-dev-1.online/treatment/contact_display.php";
+            }else if(data == "error503.html"){
+                    window.location.href = "http://php-dev-1.online/error503.html";
             }else{//other responses send the user on login page set error in console
                 console.log('error on delete contact : ' , data);
                 window.location.href = "http://php-dev-1.online/treatment/logout.php";

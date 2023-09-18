@@ -9,7 +9,7 @@
    //connection db
     $connection = connectionDb();
     if(!$connection){
-        header('location: error503.html'); 
+        header('location: ../error503.html'); 
     }
     
 

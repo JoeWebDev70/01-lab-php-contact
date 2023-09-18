@@ -95,7 +95,7 @@
 
         <!-- Lien : Mot de passe oublié -->
         <div class="form-group">
-            <a href="./password.php">Mot de passe oublié ?</a>
+            <a href="./password.html">Mot de passe oublié ?</a>
         </div>
 
         <!-- token hidden in form -->
