@@ -28,6 +28,9 @@ services:       # déclaration of services
       - type: volume
         source: php-contact-vol
         target: /var/lib/mysql
+      - type: bind          #mount/sharing of sql db
+        source: ./sql
+        target: /home
   mailhog:    #third service mail
       image: mailhog/mailhog:v1.0.0
       ports:
