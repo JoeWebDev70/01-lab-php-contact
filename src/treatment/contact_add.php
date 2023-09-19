@@ -14,7 +14,7 @@
 
     //declaration of variables
     $treatmentPage = "/treatment/contact_add.php";
-    $originPage = "http://php-dev-1.online/dashbord.html";
+    $originPage = "http://php-dev-1.online/dashboard.html";
     $userId = "";
     $name = "";
     $surname = "";

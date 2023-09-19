@@ -1,9 +1,6 @@
 let remember = "";
 
 //get if local storage contain some token for remember me and store it
-if (!localStorage.getItem("rememberMe")) {
-    localStorage.href = 'http://php-dev-1.online';
-}
 if (localStorage.getItem("rememberMe") != null) {
     remember = JSON.parse(localStorage.getItem("rememberMe"));
 }
@@ -23,13 +20,10 @@ if(remember != ""){
         }
     })
     .then((data) => { //process the response send by the previous promise
-        if(data == "access authorized"){ //only this response is processed and send the user on his dashbord
+        if(data == "access authorized"){ //only this response is processed and send the user on his dashboard
             window.location.href = "http://php-dev-1.online/treatment/contact_display.php";
         }else if(data == "access denied" || data == "access failed"){
             //check in localstorage if exist and remove item remember
-            if (!localStorage.getItem("rememberMe")) {
-                localStorage.href = 'http://php-dev-1.online';
-            }
             if (localStorage.getItem("rememberMe") != null) {
                 localStorage.removeItem("rememberMe");
             }

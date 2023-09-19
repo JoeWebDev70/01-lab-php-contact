@@ -40,25 +40,25 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="./treatment/logout.php">Mon Site</a>
+    <a class="navbar-brand" href="./treatment/logout.php">Mon Annuaire</a>
 </nav>
 
 <div class="container mt-5">
     <h1>Récupération password</h1>
             
     <!-- if success message display -->
-    <?php if(isset($successMessage) && !empty($successMessage)){ ?>
-        <div class="alert alert-success" role="alert">
-            <?php echo $successMessage;?>
-        </div> 
-    <?php $successMessage = ""; } ?>
+    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
+        <?php if(isset($successMessage) && !empty($successMessage)){ ?>
+            <p id="<?php echo $successMessage;?>" style="margin-bottom: 0;"><?php echo $successMessage;?> </p> 
+        <?php $successMessage = ""; } ?>
+    </div> 
         
     <!-- if error message display -->
-    <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-        <div class="alert alert-danger" role="alert">
-            <?php echo $errorMessage;?>
-        </div> 
-    <?php $errorMessage = ""; } ?>
+    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
+        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
+            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
+        <?php $errorMessage = ""; } ?>
+    </div> 
 
     <form action="./treatment/password_mail.php" method="POST" enctype=multipart/form-data>
     

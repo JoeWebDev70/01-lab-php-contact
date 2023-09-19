@@ -114,16 +114,16 @@
         if($sth->execute()){//insertion in db ok then send mail to user
 
             $to = $email;
-            $from = "monsite@monsite.com";
+            $from = "monannuaire@monannuaire.com";
             $subject = "Récupération de password";
             $introduction = "Bonjour " . $name . ",";
-            $bodyPart1 = "Nous avons réinitialisé votre compte monsite. Suivez les instructions ci-dessous si vous avez émis cette demande.";
+            $bodyPart1 = "Nous avons réinitialisé votre compte monannuaire. Suivez les instructions ci-dessous si vous avez émis cette demande.";
             $bodyPart2 = "Ignorez cet e-mail si la demande de réinitialisation de votre mot de passe n'a pas été déposée par vous. Ne vous inquiétez pas, votre compte est toujours sécurisé.";
             $bodyPart3 = "Cliquez sur le lien suivant pour définir un nouveau mot de passe.";
             $linkReset = "http://php-dev-1.online/password_reset.html?token=".$passwordTokenHash;
             $bodyPart4 = "Si l'activation ne fonctionne pas après avoir cliqué sur le bouton, vous pouvez copier le lien dans votre fenêtre de navigateur ou le saisir directement.";
             $thanks = "Sincères salutations,";
-            $signature = "Votre équipe monsite.";
+            $signature = "Votre équipe monannuaire.";
             $linksite = "http://php-dev-1.online/";
 
             $email_message = '<head>
@@ -141,7 +141,7 @@
             $email_message .= '<p>' . $bodyPart4 . '</p>';
             $email_message .= '<p class="margin_t">' . $thanks . '</p>';
             $email_message .= '<p class="margin_b">' . $signature . '</p>' ;
-            $email_message .= '<a href="'. $linksite . '">monsite@monsite.com</a>' . "\r\n";
+            $email_message .= '<a href="'. $linksite . '">monannuaire@monannuaire.com</a>' . "\r\n";
 
             $headers = 'From: ' . $from . "\r\n";
             $headers .= 'To: ' . $to . "\r\n";

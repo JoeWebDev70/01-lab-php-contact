@@ -9,6 +9,8 @@
     $passwordRepeat = "";
     $errorMessage = "";
     $token = "";
+    $messageLifeTime = 10; //10 sec
+    $messageTime = "";
 
     $token = uniqid(rand(), true); //token creation
     $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
@@ -29,8 +31,9 @@
         if(isset($_SESSION["message"]["error"])){
             $errorMessage = $_SESSION["message"]["error"];
             unset($_SESSION["message"]["error"]);
-        }
+        } 
     }
+    
 ?>
 
 <!DOCTYPE html>
@@ -41,11 +44,12 @@
     <title>Formulaire d'Inscription</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="./treatment/alert_message.js" defer></script>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="./treatment/logout.php">Mon Site</a>
+    <a class="navbar-brand" href="./treatment/logout.php">Mon Annuaire</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -53,12 +57,13 @@
 
 <div class="container mt-5">
     <h1>Formulaire d'Inscription</h1>
+
     <!-- if error message display -->
-    <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $errorMessage;?>
-            </div> 
+    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
+        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
+            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
         <?php $errorMessage = ""; } ?>
+    </div> 
         
     <form action="./treatment/user_add.php" method="POST" enctype=multipart/form-data>
         

@@ -14,7 +14,7 @@
 
     //declaration of variables
     $treatmentPage = "/treatment/contact_display.php";
-    $originPage = ["http://php-dev-1.online/", "http://php-dev-1.online/index.html","http://php-dev-1.online/dashbord.html"]; 
+    $originPage = ["http://php-dev-1.online/", "http://php-dev-1.online/index.html","http://php-dev-1.online/dashboard.html"]; 
     $userId = "";
 
     //check if user session exist
@@ -39,7 +39,7 @@
         $result = $sth->fetchAll(PDO::FETCH_ASSOC); 
         $_SESSION["contacts"] = $result; //set in session also if user doesn't have contact
         $_SESSION['last_access'] = time();
-        header('location: ../dashbord.html');
+        header('location: ../dashboard.html');
     }else{ //urls are not correct
         session_destroy();
         header('HTTP/1.0 404 Not Found'); 

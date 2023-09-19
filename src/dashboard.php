@@ -32,7 +32,7 @@
             }
         }
 
-        //get user name to display it on dashbord
+        //get user name to display it on dashboard
         if(isset($_SESSION["user"]["name"]) && !empty($_SESSION["user"]["name"])){
             $userName = $_SESSION["user"]["name"];
         }
@@ -149,18 +149,18 @@
     <p>Bienvenue <strong> <?php echo $userName; ?> </strong> dans votre tableau de bord de gestion des contacts. Vous pouvez ajouter, modifier ou supprimer des contacts ici.</p>
 
     <!-- if success message display -->
-    <?php if(isset($successMessage) && !empty($successMessage)){ ?>
-        <div class="alert alert-success" role="alert">
-            <?php echo $successMessage;?>
-        </div>
-    <?php $successMessage = ""; } ?>
-
+    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
+        <?php if(isset($successMessage) && !empty($successMessage)){ ?>
+            <p id="<?php echo $successMessage;?>" style="margin-bottom: 0;"><?php echo $successMessage;?> </p> 
+        <?php $successMessage = ""; } ?>
+    </div> 
+        
     <!-- if error message display -->
-    <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-        <div class="alert alert-danger" role="alert">
-            <?php echo $errorMessage;?>
-        </div>
-    <?php $errorMessage = ""; } ?>
+    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
+        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
+            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
+        <?php $errorMessage = ""; } ?>
+    </div> 
 
     <div class="row">
         <!-- Formulaire d'ajout de contact -->
