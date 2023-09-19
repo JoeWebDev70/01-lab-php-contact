@@ -7,9 +7,6 @@
 
   //connection db
    $connection = connectionDb();
-   if(!$connection){
-       header('location: ../error503.html'); 
-   }
 
    //declaration of variables
    $treatmentPage = "/treatment/password_set_new.php";

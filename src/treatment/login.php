@@ -7,11 +7,7 @@
     session_start(); 
 
    //connection db
-    $connection = connectionDb();
-    if(!$connection){
-        header('location: ../error503.html'); 
-    }
-    
+    $connection = connectionDb();  
 
     //declaration of variables
     $treatmentPage = "/treatment/login.php";

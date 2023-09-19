@@ -19,10 +19,7 @@
 
             // connection db
             $connection = connectionDb();
-            if(!$connection){
-                echo json_encode('error503.html'); 
-            }
-            
+
             //check if user session exist
             if(isset($_SESSION["user"]["id"]) && !empty($_SESSION["user"]["id"])){
                 

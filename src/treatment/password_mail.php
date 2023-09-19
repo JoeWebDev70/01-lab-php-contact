@@ -8,10 +8,6 @@
 
     //connection db
     $connection = connectionDb();
-    if(!$connection){
-        header('location: ../error503.html'); 
-    }
-
 
     //declaration of variables
     $treatmentPage = "/treatment/password_mail.php";
@@ -72,8 +68,12 @@
                 $result = $sth->fetch(PDO::FETCH_ASSOC);
 
                 if(!$result){ //mail do not exist
-                    $errorMessage .= 'Email invalide ! '; 
-                    $dataToProcess = false;
+                    $_SESSION["message"]["success"] = "Un mail vous a été envoyer. Merci de suivre les instructions ! ";
+                    unset($_SESSION["email"]);
+                    unset($_SESSION["token"]);
+                    unset($_SESSION["token_time"]);
+                    unset($_SESSION["message"]["error"]);
+                    header('location: ../index.html'); 
                 }
                 else{
                     $name = $result['name'];

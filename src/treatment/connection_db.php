@@ -11,8 +11,7 @@
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 return $conn;
         }catch(PDOException $e){ //catch exception and get its informations
-                 die("error : " . $e->getMessage());
-                 return $e;
+                 header('location: ../error503.html'); 
         }
     }
 
