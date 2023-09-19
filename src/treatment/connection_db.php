@@ -11,6 +11,7 @@
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 return $conn;
         }catch(PDOException $e){ //catch exception and get its informations
+                echo json_encode($e);
                  header('location: ../error503.html'); 
         }
     }
