@@ -5,6 +5,8 @@
     $token = "";
     $passwordToken = "";
     $errorMessage = "";
+    $message = "";
+    $class = "";
     
     $token = uniqid(rand(), true); //token creation 
     $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
@@ -21,6 +23,12 @@
         if(isset($_SESSION["message"]["error"])){$errorMessage = $_SESSION["message"]["error"];}
         unset($_SESSION["message"]);
     }
+
+    if(isset($errorMessage) && !empty($errorMessage)){
+        $message = $errorMessage;
+        $class = "alert-danger";
+        $errorMessage = "";
+    }
 ?>
 
 
@@ -32,6 +40,7 @@
     <title>Récupération password</title>
     <!-- Inclure les styles Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="./treatment/alert_message.js" defer></script>
 </head>
 <body>
 
@@ -43,11 +52,11 @@
 <div class="container mt-5">
     <h1>Récupération password</h1>
         
-    <!-- if error message display -->
-    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
-        <?php $errorMessage = ""; } ?>
+    <!-- message display -->
+    <div class="alert <?php echo $class ?>" role="alert" style="visibility: hidden; min-height: 50px"> 
+        <?php if(isset($message) && !empty($message)){ ?>
+            <p id="<?php echo $message;?>" style="margin-bottom: 0;"><?php echo $message;?> </p> 
+        <?php $message = ""; } ?>
     </div> 
 
     <form action="./treatment/password_set_new.php" method="POST" enctype=multipart/form-data>

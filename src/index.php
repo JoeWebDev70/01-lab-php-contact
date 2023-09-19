@@ -8,6 +8,8 @@
     $token = "";
     $successMessage = "";
     $errorMessage = "";
+    $message = "";
+    $class = "";
     
     $token = uniqid(rand(), true); //token creation 
     $_SESSION['token'] = password_hash($token, PASSWORD_DEFAULT); //store in session
@@ -30,6 +32,16 @@
         if(isset($_SESSION["message"]["success"])){$successMessage = $_SESSION["message"]["success"];}
         unset($_SESSION["message"]);
     }
+
+    if(isset($successMessage) && !empty($successMessage)){
+        $message = $successMessage;
+        $class = "alert-success";
+        $successMessage = "";
+    }else if(isset($errorMessage) && !empty($errorMessage)){
+        $message = $errorMessage;
+        $class = "alert-danger";
+        $errorMessage = "";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +54,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- script for pass data from php to js and return -->
     <script src="./treatment/remember.js" defer></script> 
+    <script src="./treatment/alert_message.js" defer></script>
 </head>
 <body>
 
@@ -59,18 +72,11 @@
 <div class="container mt-5">
     <h1>Formulaire de Connexion</h1>
     
-    <!-- if success message display -->
-    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
-        <?php if(isset($successMessage) && !empty($successMessage)){ ?>
-            <p id="<?php echo $successMessage;?>" style="margin-bottom: 0;"><?php echo $successMessage;?> </p> 
-        <?php $successMessage = ""; } ?>
-    </div> 
-        
-    <!-- if error message display -->
-    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
-        <?php $errorMessage = ""; } ?>
+    <!-- message display -->
+    <div class="alert <?php echo $class ?>" role="alert" style="visibility: hidden; min-height: 50px"> 
+        <?php if(isset($message) && !empty($message)){ ?>
+            <p id="<?php echo $message;?>" style="margin-bottom: 0;"><?php echo $message;?> </p> 
+        <?php $message = ""; } ?>
     </div> 
 
     <form action="./treatment/login.php" method="POST" enctype=multipart/form-data>

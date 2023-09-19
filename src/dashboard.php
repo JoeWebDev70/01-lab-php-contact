@@ -17,6 +17,8 @@
     $userName = "";
     $successMessage = "";
     $errorMessage = "";
+    $message = "";
+    $class = "";
     $lifeTimeSession = 1*60;
     $rememberMe = "";
     $delete = "";
@@ -57,11 +59,21 @@
     }
 
 
-     // get the values for display messages
+    // get the values for display messages
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         if(isset($_SESSION["message"]["error"])){$errorMessage = $_SESSION["message"]["error"];}
         if(isset($_SESSION["message"]["success"])){$successMessage = $_SESSION["message"]["success"];}
         unset($_SESSION["message"]);
+    }
+
+    if(isset($successMessage) && !empty($successMessage)){
+        $message = $successMessage;
+        $class = "alert-success";
+        $successMessage = "";
+    }else if(isset($errorMessage) && !empty($errorMessage)){
+        $message = $errorMessage;
+        $class = "alert-danger";
+        $errorMessage = "";
     }
 
     //if remember was set in this connection of user then process it: set the token in hidden input
@@ -93,6 +105,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="./treatment/logout.js" defer></script>
     <script src="./treatment/contact_confirm_delete.js" defer></script>
+    <script src="./treatment/alert_message.js" defer></script>
 </head>
 <body>
 
@@ -148,18 +161,11 @@
     <h1>Tableau de Bord - Gestion des Contacts</h1>
     <p>Bienvenue <strong> <?php echo $userName; ?> </strong> dans votre tableau de bord de gestion des contacts. Vous pouvez ajouter, modifier ou supprimer des contacts ici.</p>
 
-    <!-- if success message display -->
-    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
-        <?php if(isset($successMessage) && !empty($successMessage)){ ?>
-            <p id="<?php echo $successMessage;?>" style="margin-bottom: 0;"><?php echo $successMessage;?> </p> 
-        <?php $successMessage = ""; } ?>
-    </div> 
-        
-    <!-- if error message display -->
-    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
-        <?php $errorMessage = ""; } ?>
+    <!-- message display -->
+    <div class="alert <?php echo $class ?>" role="alert" style="visibility: hidden; min-height: 50px"> 
+        <?php if(isset($message) && !empty($message)){ ?>
+            <p id="<?php echo $message;?>" style="margin-bottom: 0;"><?php echo $message;?> </p> 
+        <?php $message = ""; } ?>
     </div> 
 
     <div class="row">

@@ -8,6 +8,8 @@
     $password = "";
     $passwordRepeat = "";
     $errorMessage = "";
+    $message = "";
+    $class = "";
     $token = "";
     $messageLifeTime = 10; //10 sec
     $messageTime = "";
@@ -27,11 +29,16 @@
     }
 
     // get the values for display messages
-    if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
-        if(isset($_SESSION["message"]["error"])){
-            $errorMessage = $_SESSION["message"]["error"];
-            unset($_SESSION["message"]["error"]);
-        } 
+    if(isset($_SESSION["message"]["error"]) && !empty($_SESSION["message"]["error"])){
+        $errorMessage = $_SESSION["message"]["error"];
+        unset($_SESSION["message"]["error"]);
+        
+    }
+
+    if(isset($errorMessage) && !empty($errorMessage)){
+        $message = $errorMessage;
+        $class = "alert-danger";
+        $errorMessage = "";
     }
     
 ?>
@@ -58,11 +65,11 @@
 <div class="container mt-5">
     <h1>Formulaire d'Inscription</h1>
 
-    <!-- if error message display -->
-    <div class="alert alert-danger" role="alert" style="min-height:50px; visibility: hidden;"> 
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
-        <?php $errorMessage = ""; } ?>
+    <!-- message display -->
+    <div class="alert <?php echo $class ?>" role="alert" style="visibility: hidden; min-height: 50px"> 
+        <?php if(isset($message) && !empty($message)){ ?>
+            <p id="<?php echo $message;?>" style="margin-bottom: 0;"><?php echo $message;?> </p> 
+        <?php $message = ""; } ?>
     </div> 
         
     <form action="./treatment/user_add.php" method="POST" enctype=multipart/form-data>
