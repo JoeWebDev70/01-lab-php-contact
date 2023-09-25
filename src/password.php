@@ -63,13 +63,6 @@
             <p id="<?php echo $message;?>" style="margin-bottom: 0;"><?php echo $message;?> </p> 
         <?php $message = ""; } ?>
     </div> 
-        
-    <!-- if error message display -->
-    <div class="alert alert-danger" role="alert" style="display: none;"> 
-        <?php if(isset($errorMessage) && !empty($errorMessage)){ ?>
-            <p id="<?php echo $errorMessage;?>" style="margin-bottom: 0;"><?php echo $errorMessage;?> </p> 
-        <?php $errorMessage = ""; } ?>
-    </div> 
 
     <form action="./treatment/password_mail.php" method="POST" enctype=multipart/form-data>
     
