@@ -16,35 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `contact`
---
-
-DROP TABLE IF EXISTS `contact`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `contact` (
-  `idcontact` int NOT NULL AUTO_INCREMENT,
-  `contact_name` varchar(255) NOT NULL,
-  `contact_surname` varchar(255) NOT NULL,
-  `contact_email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `user_iduser` int NOT NULL,
-  PRIMARY KEY (`idcontact`,`user_iduser`),
-  KEY `fk_contact_user_idx` (`user_iduser`),
-  CONSTRAINT `fk_contact_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact`
---
-
-LOCK TABLES `contact` WRITE;
-/*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES (1,'Pippo','Pluto','pippo.pluto@gmail.com',1),(2,'Pippo','Pluto2','pippo2.pluto@gmail.com',1),(3,'Test','Test','test@hotmail.fr',1),(4,'Pippo','Pluto','plutopippo70@gmail.com',3),(5,'Test','Test','test@gmail.com',3);
-/*!40000 ALTER TABLE `contact` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -63,7 +34,26 @@ CREATE TABLE `user` (
   `password_date` int DEFAULT NULL,
   PRIMARY KEY (`iduser`),
   UNIQUE KEY `user_email_UNIQUE` (`user_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `contact`
+--
+
+DROP TABLE IF EXISTS `contact`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `contact` (
+  `idcontact` int NOT NULL AUTO_INCREMENT,
+  `contact_name` varchar(255) NOT NULL,
+  `contact_surname` varchar(255) NOT NULL,
+  `contact_email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `user_iduser` int NOT NULL,
+  PRIMARY KEY (`idcontact`,`user_iduser`),
+  KEY `fk_contact_user_idx` (`user_iduser`),
+  CONSTRAINT `fk_contact_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,5 +74,17 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+--
+-- Dumping data for table `contact`
+--
+
+LOCK TABLES `contact` WRITE;
+/*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+INSERT INTO `contact` VALUES (1,'Pippo','Pluto','pippo.pluto@gmail.com',1),(2,'Pippo','Pluto2','pippo2.pluto@gmail.com',1),(3,'Test','Test','test@hotmail.fr',1),(4,'Pippo','Pluto','plutopippo70@gmail.com',3),(5,'Test','Test','test@gmail.com',3);
+/*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 -- Dump completed on 2023-09-19 11:30:29
