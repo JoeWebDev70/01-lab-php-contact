@@ -5,7 +5,7 @@ services:       # déclaration of services
       dockerfile: Dockerfile
     #configuration of server
     ports:
-      - 80:80
+      - 5500:80
     volumes:
       - type: bind          #mount/sharing of src 
         source: ./src
